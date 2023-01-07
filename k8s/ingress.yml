@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: car-rental-system-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: peepoclown.cloud.okteto.net
+      http:
+        paths:
+          - path: /api/v1/
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-gateway
+                port:
+                  number: 8080
