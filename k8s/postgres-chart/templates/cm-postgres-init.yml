@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "cm-{{ .Chart.Name }}-init"
+  namespace: {{ .Values.namespace }}
+data:
+  init.sql: |
+    CREATE ROLE {{ .Values.pg.primary.username }} WITH PASSWORD '{{ .Values.pg.primary.password }}';
+    ALTER ROLE {{ .Values.pg.primary.username }} WITH LOGIN;
+
+    CREATE DATABASE cars;
+    GRANT ALL PRIVILEGES ON DATABASE cars TO {{ .Values.pg.primary.username }};
+
+    CREATE DATABASE rentals;
+    GRANT ALL PRIVILEGES ON DATABASE rentals TO {{ .Values.pg.primary.username }};
+
+    CREATE DATABASE payments;
+    GRANT ALL PRIVILEGES ON DATABASE payments TO {{ .Values.pg.primary.username }};

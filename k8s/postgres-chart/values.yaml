@@ -1,0 +1,24 @@
+namespace: peepoclown
+
+svc:
+  port: 5432
+  targetPort: 5432
+
+image: "postgres:14.1"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+pg:
+  default:
+    username: cG9zdGdyZXM=
+    password: cG9zdGdyZXM=
+    db: cG9zdGdyZXM=
+  primary:
+    username: dev
+    password: dev
