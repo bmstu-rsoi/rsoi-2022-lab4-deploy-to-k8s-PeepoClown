@@ -1,0 +1,23 @@
+cars:
+  service:
+    port: 8080
+    targetPort: 8080
+    image: peepoclown/rsoi-lab4:cars-latest
+
+payment:
+  service:
+    port: 8080
+    targetPort: 8080
+    image: peepoclown/rsoi-lab4:payment-latest
+
+rental:
+  service:
+    port: 8080
+    targetPort: 8080
+    image: peepoclown/rsoi-lab4:rental-latest
+
+gateway:
+  service:
+    port: 8080
+    targetPort: 8080
+    image: peepoclown/rsoi-lab4:gateway-latest

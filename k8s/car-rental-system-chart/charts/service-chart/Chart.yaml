@@ -1,0 +1,5 @@
+apiVersion: v2
+name: service-chart
+description: A Helm chart for each service of Car Rental System
+version: 0.1.0
+appVersion: "1.16.0"
