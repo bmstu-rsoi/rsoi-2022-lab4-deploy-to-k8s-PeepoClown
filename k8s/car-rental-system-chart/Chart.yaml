@@ -1,0 +1,19 @@
+apiVersion: v2
+name: car-rental-system-chart
+description: A Helm chart for Car Rental System
+version: 0.1.0
+appVersion: "1.16.0"
+
+dependencies:
+  - name: service-chart
+    version: 0.1.0
+    alias: cars
+  - name: service-chart
+    version: 0.1.0
+    alias: payment
+  - name: service-chart
+    version: 0.1.0
+    alias: rental
+  - name: service-chart
+    version: 0.1.0
+    alias: gateway
