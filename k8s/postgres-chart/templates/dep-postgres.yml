@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Chart.Name }}
+    app: {{ .Chart.Name }}
+    deleteLabel: {{ .Chart.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        deleteLabel: {{ .Chart.Name }}
+    spec:
+      volumes:
+        - name: postgres-data
+        - name: postgres-init-data
+          configMap:
+            name: "cm-{{ .Chart.Name }}-init"
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image }}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: "sec-{{ .Chart.Name }}"
+                  key: DATABASE_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "sec-{{ .Chart.Name }}"
+                  key: DATABASE_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: "sec-{{ .Chart.Name }}"
+                  key: DATABASE_NAME
+          ports:
+            - name: "{{ .Chart.Name }}-port"
+              containerPort: {{ .Values.svc.targetPort }}
+              protocol: TCP
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+            - name: postgres-init-data
+              mountPath: /docker-entrypoint-initdb.d
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+      restartPolicy: Always
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%

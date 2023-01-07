@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "sec-{{ .Chart.Name }}"
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+    deleteLabel: {{ .Chart.Name }}
+type: Opaque
+data:
+  DATABASE_USER: {{ .Values.pg.default.username }}
+  DATABASE_PASSWORD: {{ .Values.pg.default.password }}
+  DATABASE_NAME: {{ .Values.pg.default.db }}
