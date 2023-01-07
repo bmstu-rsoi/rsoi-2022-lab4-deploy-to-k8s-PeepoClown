@@ -27,10 +27,6 @@ jobs:
       - name: Gradle build
         run: ./gradlew clean build
 
-      - name: Build docker images
-        timeout-minutes: 10
-        run: docker compose build
-
       - name: Docker login
         uses: docker/login-action@v2
         with:
