@@ -59,7 +59,7 @@ jobs:
       - name: Wait pods up
         uses: jakejarvis/wait-action@master
         with:
-          time: '60s'
+          time: '120s'
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
