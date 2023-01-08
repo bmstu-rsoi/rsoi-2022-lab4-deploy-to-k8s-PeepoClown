@@ -52,6 +52,7 @@ jobs:
           kubectl config set-credentials dev --token="${{ secrets.K8S_KUBECONFIG }}"
           kubectl config set clusters.rsoi-cluster.certificate-authority-data "${{ secrets.K8S_CLUSTER_CERT }}"
           kubectl config set-context production --cluster=rsoi-cluster --user=dev --namespace=peepoclown
+          kubectl config use-context production
           helm upgrade --install rsoi-lab4 ./k8s/car-rental-system-chart
           kubectl apply -f k8s/ingress.yml
 
